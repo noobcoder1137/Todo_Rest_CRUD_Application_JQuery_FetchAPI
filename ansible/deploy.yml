@@ -1,0 +1,8 @@
+---
+
+- hosts: ubuntu-host
+  vars:
+    project_path: /var/www/nodejs
+  become: yes
+  roles:
+  - deploy

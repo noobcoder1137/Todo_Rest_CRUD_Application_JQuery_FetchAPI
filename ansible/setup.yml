@@ -1,0 +1,7 @@
+---
+
+- hosts: ubuntu-host
+  become: yes
+  roles:
+  - mongodb
+  - npm
