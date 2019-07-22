@@ -1,0 +1,15 @@
+[Unit]
+Description=My app
+
+[Service]
+ExecStart=/var/www/nodejs/app.js
+Restart=always
+User=root
+# Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
+Group=root
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/www/nodejs
+
+[Install]
+WantedBy=multi-user.target

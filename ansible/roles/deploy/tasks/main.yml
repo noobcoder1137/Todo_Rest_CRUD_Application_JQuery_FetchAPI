@@ -1,0 +1,34 @@
+- name: Make directory
+  shell: "mkdir -p {{ project_path }}"
+
+- name: Clone the repository
+  git:
+    repo: https://github.com/robertpountney92/Todo_Rest_CRUD_Application_JQuery_FetchAPI.git
+    dest: "{{ project_path }}"
+    force: yes
+
+- name: Allow execution of app
+  shell: "chmod 744 {{ project_path }}/app.js"
+    
+- name: Update app to be run as a service
+  shell: sed -i '1i#!/usr/bin/env node' /var/www/nodejs/app.js
+
+- name: Npm install
+  npm:
+    path={{ project_path }}
+
+- name: Ansible copy service file to remote server
+  copy:
+    src: '{{ playbook_dir }}/roles/deploy/tasks/todo_app.service'
+    dest: /etc/systemd/system 
+
+
+
+- name: Run application
+  systemd:
+    name: todo_app
+    state: started
+  
+
+# - name: Run application
+#   shell: "cd {{ project_path }} && node app "
